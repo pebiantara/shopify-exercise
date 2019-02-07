@@ -4,13 +4,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="{{ settings.color_accent }}">
   <link rel="canonical" href="{{ canonical_url }}">
-
   {%- if settings.favicon != blank -%}
     <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
   {%- endif -%}
-
   {%- capture seo_title -%}
     {{ page_title }}
     {%- if current_tags -%}
@@ -25,34 +22,28 @@
     {%- endunless -%}
   {%- endcapture -%}
   <title>{{ seo_title | strip }}</title>
-
   {%- if page_description -%}
     <meta name="description" content="{{ page_description | escape }}">
   {%- endif -%}
-
   {% include 'social-meta-tags' %}
+
+  {{ 'font-awesome.min.css' | asset_url | stylesheet_tag }}
+
   {% include 'style-tags', layout: 'theme' %}
   {% include 'css-variables' %}
 
   {{ content_for_header }}
 </head>
 
-<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }}">
-  <h1>Test</h1>
-  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
-
+<body id="template-{{ template.name | handle }}" class="template-{{ template.name | handle }}">
   {% section 'header' %}
-
   <main role="main" id="MainContent">
     {{ content_for_layout }}
   </main>
-
   {% section 'footer' %}
-
 
   <script>
     document.documentElement.className = document.documentElement.className.replace('no-js', '');
-
     window.theme = {
       strings: {
         addToCart: {{ 'products.product.add_to_cart' | t | json }},
@@ -66,7 +57,6 @@
       theme.allCountryOptionTags = {{ all_country_option_tags | json }};
     {% endif %}
   </script>
-
   {% include 'script-tags', layout: 'theme' %}
 </body>
 </html>
